@@ -1,0 +1,79 @@
+/**
+ * Buttons
+ */
+
+/**
+ * btnSolid
+ * => @include btnSolid ();
+ * => @include btnSolid ( hoverBackground, hoverText, colorBackground, colorText );
+ */
+@mixin btnSolid( $color1:map_get($colors, t-orange), $color2:map_get($colors, t-white), $color3:map_get($colors, t-yellow), $color4:map_get($colors, t-white) ) {
+  transform: perspective(1px) translateZ(0);
+  transition-duration: 0.3s;
+  color: $color4;
+  background-color: $color3;
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: $color1;
+    transform: scaleY(0);
+    transform-origin: 50%;
+    transition-property: transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+  }
+  &:hover, &:focus, &:active, &.active {
+    color: $color2;
+    &::before {
+      transform: scaleY(1);
+    }
+  }
+}
+
+/**
+ * btnOutline
+ * => @include btnOutline ();
+ * => @include btnOutline ( colorBackground, colorText, hoverBackground );
+ */
+@mixin btnOutline( $color1:map_get($colors, t-blue), $color2:map_get($colors, t-blue), $color3:map_get($colors, t-blue) ) {
+  color: $color1;
+  background-color: transparent;
+  background-image: none;
+  border-color: $color2;
+  transform: perspective(1px) translateZ(0);
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+    background: $color3;
+    height: 3px;
+    transition-property: left, right;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+  }
+  &:hover, &:focus, &:active, &.active {
+    &::before {
+      left: 0;
+      right: 0;
+    }
+  }
+}
+
+/*
+* Include
+*/
+.btn-tpl1 {
+  @include btnSolid ();
+}
+
+.btn-outline {
+  @include btnOutline()
+}
